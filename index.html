@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Tyler "Boris" Dunn — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+<style>
+/* ========== RESET & BASE ========== */
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0a0a0f;--bg2:#12121a;--bg3:#1a1a2e;
+  --accent:#00f0ff;--accent2:#7b2ff7;--accent3:#ff2d75;
+  --text:#e0e0e8;--text-dim:#8888a0;
+  --card:#16162a;--border:#2a2a44;
+  --font:'Space Grotesk',system-ui,sans-serif;
+  --mono:'JetBrains Mono',monospace;
+}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:var(--font);background:var(--bg);color:var(--text);overflow-x:hidden;line-height:1.6}
+a{color:var(--accent);text-decoration:none;transition:color .2s}
+a:hover{color:var(--accent3)}
+::selection{background:var(--accent2);color:#fff}
+
+/* ========== PARTICLES CANVAS ========== */
+#particles{position:fixed;top:0;left:0;width:100%;height:100%;z-index:0;pointer-events:none}
+
+/* ========== NAV ========== */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:1rem 2rem;display:flex;justify-content:space-between;align-items:center;backdrop-filter:blur(12px);background:rgba(10,10,15,.7);border-bottom:1px solid transparent;transition:border-color .3s}
+nav.scrolled{border-color:var(--border)}
+.nav-logo{font-family:var(--mono);font-weight:700;font-size:1.2rem;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.nav-links{display:flex;gap:1.5rem;list-style:none}
+.nav-links a{color:var(--text-dim);font-size:.9rem;font-weight:500;position:relative;padding:.25rem 0}
+.nav-links a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:2px;background:var(--accent);transition:width .3s}
+.nav-links a:hover{color:var(--text)}
+.nav-links a:hover::after{width:100%}
+.hamburger{display:none;flex-direction:column;gap:4px;cursor:pointer;background:none;border:none}
+.hamburger span{width:24px;height:2px;background:var(--text);transition:transform .3s}
+
+/* ========== HERO ========== */
+.hero{min-height:100vh;display:flex;align-items:center;justify-content:center;position:relative;z-index:1;padding:6rem 2rem 2rem}
+.hero-inner{display:flex;align-items:center;gap:4rem;max-width:1100px;width:100%}
+.hero-photo{position:relative;flex-shrink:0}
+.hero-photo img{width:220px;height:220px;border-radius:50%;object-fit:cover;object-position:top;border:3px solid var(--accent);box-shadow:0 0 40px rgba(0,240,255,.2)}
+.hero-photo::before{content:'';position:absolute;inset:-8px;border-radius:50%;border:2px dashed var(--accent2);animation:spin 20s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.hero-text h1{font-size:3.5rem;font-weight:700;line-height:1.1;margin-bottom:.5rem}
+.hero-text h1 .first{color:var(--text)}
+.hero-text h1 .nick{color:var(--accent);font-family:var(--mono)}
+.hero-text .subtitle{font-size:1.3rem;color:var(--accent2);font-weight:500;margin-bottom:.75rem}
+.hero-text .tagline{font-family:var(--mono);font-size:1rem;color:var(--accent);min-height:1.5em}
+.tagline .cursor{animation:blink .7s infinite}
+@keyframes blink{50%{opacity:0}}
+.hero-text .hero-cta{margin-top:1.5rem;display:flex;gap:1rem;flex-wrap:wrap}
+.btn{display:inline-flex;align-items:center;gap:.5rem;padding:.7rem 1.6rem;border-radius:8px;font-weight:600;font-size:.9rem;transition:all .3s;border:none;cursor:pointer}
+.btn-primary{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#000}
+.btn-primary:hover{transform:translateY(-2px);box-shadow:0 8px 25px rgba(0,240,255,.3)}
+.btn-outline{border:2px solid var(--accent);color:var(--accent);background:transparent}
+.btn-outline:hover{background:var(--accent);color:#000}
+
+/* ========== SECTIONS ========== */
+section{position:relative;z-index:1;padding:5rem 2rem}
+.section-inner{max-width:1000px;margin:0 auto}
+.section-title{font-size:2rem;font-weight:700;margin-bottom:.5rem;display:flex;align-items:center;gap:.75rem}
+.section-title::before{content:'//';font-family:var(--mono);color:var(--accent2);font-size:1.2rem}
+.section-subtitle{color:var(--text-dim);margin-bottom:3rem;font-size:.95rem}
+
+/* ========== ABOUT ========== */
+.about-grid{display:grid;grid-template-columns:1fr 1fr;gap:3rem;align-items:start}
+.about-text p{margin-bottom:1rem;color:var(--text-dim);line-height:1.8}
+.about-stats{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+.stat-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.5rem;text-align:center;transition:all .3s}
+.stat-card:hover{border-color:var(--accent);transform:translateY(-4px)}
+.stat-card .num{font-size:2rem;font-weight:700;background:linear-gradient(135deg,var(--accent),var(--accent2));-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.stat-card .label{font-size:.8rem;color:var(--text-dim);margin-top:.25rem}
+
+/* ========== SKILLS ========== */
+.skills-container{display:flex;gap:3rem;flex-wrap:wrap}
+.skills-radar{flex:1;min-width:300px;display:flex;justify-content:center;align-items:center}
+.skills-radar canvas{max-width:400px;width:100%}
+.skills-list{flex:1;min-width:280px}
+.skill-item{margin-bottom:1.2rem}
+.skill-header{display:flex;justify-content:space-between;margin-bottom:.4rem;font-size:.9rem;font-weight:500}
+.skill-bar{height:6px;background:var(--bg3);border-radius:3px;overflow:hidden}
+.skill-fill{height:100%;border-radius:3px;background:linear-gradient(90deg,var(--accent),var(--accent2));width:0;transition:width 1.2s cubic-bezier(.25,.8,.25,1)}
+
+/* ========== TIMELINE ========== */
+.timeline{position:relative;padding-left:40px}
+.timeline::before{content:'';position:absolute;left:15px;top:0;bottom:0;width:2px;background:linear-gradient(to bottom,var(--accent),var(--accent2),var(--accent3))}
+.timeline-item{position:relative;margin-bottom:2.5rem;opacity:0;transform:translateX(-30px);transition:all .6s cubic-bezier(.25,.8,.25,1)}
+.timeline-item.visible{opacity:1;transform:translateX(0)}
+.timeline-item::before{content:'';position:absolute;left:-29px;top:8px;width:12px;height:12px;border-radius:50%;background:var(--accent);border:2px solid var(--bg);box-shadow:0 0 12px rgba(0,240,255,.5)}
+.timeline-item:nth-child(even)::before{background:var(--accent2);box-shadow:0 0 12px rgba(123,47,247,.5)}
+.timeline-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.5rem;transition:all .3s}
+.timeline-card:hover{border-color:var(--accent);box-shadow:0 4px 20px rgba(0,240,255,.1)}
+.timeline-date{font-family:var(--mono);font-size:.8rem;color:var(--accent);margin-bottom:.25rem}
+.timeline-role{font-size:1.1rem;font-weight:600}
+.timeline-company{color:var(--accent2);font-size:.95rem;margin-bottom:.5rem}
+.timeline-card ul{list-style:none;padding:0}
+.timeline-card li{position:relative;padding-left:1.2rem;margin-bottom:.4rem;font-size:.88rem;color:var(--text-dim);line-height:1.5}
+.timeline-card li::before{content:'▹';position:absolute;left:0;color:var(--accent)}
+
+/* ========== PROJECTS ========== */
+.projects-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem}
+.project-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.8rem;transition:all .4s;position:relative;overflow:hidden}
+.project-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--accent),var(--accent2),var(--accent3));transform:scaleX(0);transition:transform .4s;transform-origin:left}
+.project-card:hover::before{transform:scaleX(1)}
+.project-card:hover{transform:translateY(-6px);border-color:var(--accent2)}
+.project-icon{font-size:2.5rem;margin-bottom:1rem}
+.project-card h3{font-size:1.15rem;margin-bottom:.5rem}
+.project-card p{font-size:.88rem;color:var(--text-dim);line-height:1.6;margin-bottom:1rem}
+.project-tags{display:flex;gap:.5rem;flex-wrap:wrap}
+.tag{font-family:var(--mono);font-size:.7rem;padding:.25rem .6rem;background:var(--bg3);border:1px solid var(--border);border-radius:20px;color:var(--accent)}
+
+/* ========== BLOG ========== */
+.blog-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.5rem}
+.blog-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.5rem;transition:all .3s}
+.blog-card:hover{border-color:var(--accent3);transform:translateY(-4px)}
+.blog-date{font-family:var(--mono);font-size:.75rem;color:var(--accent3);margin-bottom:.5rem}
+.blog-card h3{font-size:1.05rem;margin-bottom:.5rem}
+.blog-card p{font-size:.85rem;color:var(--text-dim);line-height:1.5}
+
+/* ========== CONTACT ========== */
+.contact-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1.5rem;margin-top:2rem}
+.contact-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.5rem;text-align:center;transition:all .3s}
+.contact-card:hover{border-color:var(--accent);transform:translateY(-4px)}
+.contact-card .icon{font-size:2rem;margin-bottom:.75rem}
+.contact-card .label{font-size:.8rem;color:var(--text-dim);margin-bottom:.25rem}
+.contact-card .value{font-size:.85rem;font-weight:500;word-break:break-all;overflow-wrap:break-word}
+
+/* ========== FOOTER ========== */
+footer{text-align:center;padding:3rem 2rem;color:var(--text-dim);font-size:.8rem;position:relative;z-index:1;border-top:1px solid var(--border)}
+
+/* ========== SCROLL ANIMATIONS ========== */
+.reveal{opacity:0;transform:translateY(40px);transition:all .7s cubic-bezier(.25,.8,.25,1)}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+/* ========== MOBILE ========== */
+@media(max-width:768px){
+  .hero-inner{flex-direction:column;text-align:center;gap:2rem}
+  .hero-text h1{font-size:2.2rem}
+  .hero-text .hero-cta{justify-content:center}
+  .about-grid{grid-template-columns:1fr}
+  .nav-links{display:none;position:absolute;top:100%;left:0;right:0;background:var(--bg2);flex-direction:column;padding:1rem 2rem;border-bottom:1px solid var(--border)}
+  .nav-links.open{display:flex}
+  .hamburger{display:flex}
+  .skills-container{flex-direction:column}
+}
+</style>
+</head>
+<body>
+
+<canvas id="particles"></canvas>
+
+<!-- NAV -->
+<nav id="nav">
+  <div class="nav-logo">&lt;boris /&gt;</div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#about">About</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#experience">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#blog">Blog</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-inner">
+    <div class="hero-photo">
+      <img src="/assets/profile.jpg" alt="Tyler Boris Dunn" />
+    </div>
+    <div class="hero-text">
+      <h1><span class="first">Tyler </span><span class="nick">"Boris"</span><span class="first"> Dunn</span></h1>
+      <div class="subtitle">Sr. RPA Developer · Automation Architect · AI Integrator</div>
+      <div class="tagline" id="tagline"></div>
+      <div class="hero-cta">
+        <a href="#experience" class="btn btn-primary">📋 View Experience</a>
+        <a href="#contact" class="btn btn-outline">💬 Get In Touch</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section id="about">
+  <div class="section-inner reveal">
+    <h2 class="section-title">About Me</h2>
+    <p class="section-subtitle">The short version.</p>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>Hey, I'm Boris — a senior automation developer from Murfreesboro, TN who turns tedious manual processes into elegant, self-running systems. With nearly a decade in tech, I've gone from helpdesk warrior to leading enterprise RPA operations for the State of Tennessee.</p>
+        <p>I'm obsessed with the intersection of automation and AI. When I'm not orchestrating hundreds of production bots, I'm building Discord bots, experimenting with LLMs, and finding new ways to make machines do the boring stuff so humans don't have to.</p>
+        <p>I believe the best code is the code that replaces itself — and the best developers are the ones who automate themselves out of a job, then find a harder one.</p>
+      </div>
+      <div class="about-stats">
+        <div class="stat-card"><div class="num">160+</div><div class="label">Production Automations</div></div>
+        <div class="stat-card"><div class="num">10K+</div><div class="label">Hours Saved</div></div>
+        <div class="stat-card"><div class="num">15K</div><div class="label">Daily Bot Runs</div></div>
+        <div class="stat-card"><div class="num">9+</div><div class="label">Years in Tech</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="section-inner reveal">
+    <h2 class="section-title">Skills</h2>
+    <p class="section-subtitle">What I work with.</p>
+    <div class="skills-container">
+      <div class="skills-radar"><canvas id="radarCanvas" width="400" height="400"></canvas></div>
+      <div class="skills-list">
+        <div class="skill-item"><div class="skill-header"><span>UiPath / RPA</span><span>95%</span></div><div class="skill-bar"><div class="skill-fill" data-w="95%"></div></div></div>
+        <div class="skill-item"><div class="skill-header"><span>C# / .NET</span><span>90%</span></div><div class="skill-bar"><div class="skill-fill" data-w="90%"></div></div></div>
+        <div class="skill-item"><div class="skill-header"><span>JavaScript</span><span>85%</span></div><div class="skill-bar"><div class="skill-fill" data-w="85%"></div></div></div>
+        <div class="skill-item"><div class="skill-header"><span>Python</span><span>80%</span></div><div class="skill-bar"><div class="skill-fill" data-w="80%"></div></div></div>
+        <div class="skill-item"><div class="skill-header"><span>SQL</span><span>85%</span></div><div class="skill-bar"><div class="skill-fill" data-w="85%"></div></div></div>
+        <div class="skill-item"><div class="skill-header"><span>PowerShell</span><span>80%</span></div><div class="skill-bar"><div class="skill-fill" data-w="80%"></div></div></div>
+        <div class="skill-item"><div class="skill-header"><span>AI / LLM Integration</span><span>85%</span></div><div class="skill-bar"><div class="skill-fill" data-w="85%"></div></div></div>
+        <div class="skill-item"><div class="skill-header"><span>Java / C++</span><span>70%</span></div><div class="skill-bar"><div class="skill-fill" data-w="70%"></div></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section id="experience">
+  <div class="section-inner reveal">
+    <h2 class="section-title">Experience</h2>
+    <p class="section-subtitle">Where I've been and what I've built.</p>
+    <div class="timeline">
+
+      <div class="timeline-item">
+        <div class="timeline-card">
+          <div class="timeline-date">Nov 2024 — Present</div>
+          <div class="timeline-role">Sr. RPA Developer</div>
+          <div class="timeline-company">Strategic Technology Solutions — State of Tennessee</div>
+          <ul>
+            <li>Lead team of 5 ops developers maintaining 160+ production automations</li>
+            <li>Principal technical escalation point for complex automation failures across PeopleSoft ERP (Edison)</li>
+            <li>Spearhead discovery of emerging tech including UiPath Agentic AI</li>
+            <li>Oversee enterprise RPA environment: 56 Orchestrator folders, REFramework, Dispatcher/Performer</li>
+            <li>Integrate LLMs and AI via UiPath AI Center, Agent Builder, Integration Service</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-card">
+          <div class="timeline-date">Apr 2022 — Nov 2024</div>
+          <div class="timeline-role">Data Integration Engineer / RPA Developer</div>
+          <div class="timeline-company">P/S/L Group</div>
+          <ul>
+            <li>Enterprise-wide financial operations automations</li>
+            <li>UiPath platform and C# solutions</li>
+            <li>Maintained 140 RPA processes running ~15,000 times/day</li>
+            <li>Integrated LLMs via API and UiPath Agentic AI tools</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-card">
+          <div class="timeline-date">Sep 2020 — Apr 2022</div>
+          <div class="timeline-role">Associate Automation Engineer</div>
+          <div class="timeline-company">HCA Healthcare</div>
+          <ul>
+            <li>Automations with estimated 10,000 hours time savings</li>
+            <li>Built .NET Core API used enterprise-wide with ServiceNow</li>
+            <li>Coordinated bi-weekly Virtual Hallway Meetings led by CIO</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-card">
+          <div class="timeline-date">Sep 2019 — Sep 2020</div>
+          <div class="timeline-role">Client Support Analyst I</div>
+          <div class="timeline-company">HCA Healthcare</div>
+          <ul>
+            <li>Tier 2 support for Exchange and Webex</li>
+            <li>PowerShell automation for Exchange permission requests</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-card">
+          <div class="timeline-date">Jul 2018 — Sep 2019</div>
+          <div class="timeline-role">Associate Client Support Analyst</div>
+          <div class="timeline-company">HCA Healthcare</div>
+          <ul>
+            <li>Tier 1 support, QA checks</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="timeline-item">
+        <div class="timeline-card">
+          <div class="timeline-date">May 2015 — Jul 2018</div>
+          <div class="timeline-role">Student Technology Assistant</div>
+          <div class="timeline-company">Middle Tennessee State University</div>
+          <ul>
+            <li>Technical support, Active Directory administration</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- EDUCATION -->
+<section id="education">
+  <div class="section-inner reveal">
+    <h2 class="section-title">Education</h2>
+    <div class="timeline">
+      <div class="timeline-item visible">
+        <div class="timeline-card">
+          <div class="timeline-date">Middle Tennessee State University</div>
+          <div class="timeline-role">B.S. Computer Science</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="section-inner reveal">
+    <h2 class="section-title">Projects</h2>
+    <p class="section-subtitle">Stuff I build for fun.</p>
+    <div class="projects-grid">
+      <div class="project-card">
+        <div class="project-icon">🦊</div>
+        <h3>Silver Fox Gacha Bot</h3>
+        <p>A Discord gacha card game featuring AI-generated art. Collect, trade, and flex rare cards with your friends. Full economy system with pulls, inventories, and leaderboards.</p>
+        <div class="project-tags"><span class="tag">Discord.js</span><span class="tag">AI Art</span><span class="tag">Node.js</span><span class="tag">MongoDB</span></div>
+      </div>
+      <div class="project-card">
+        <div class="project-icon">🤖</div>
+        <h3>Homie Bot</h3>
+        <p>An AI chatbot trained on 200K+ messages from a friend group. It talks like your homies, remembers inside jokes, and roasts people with surgical precision.</p>
+        <div class="project-tags"><span class="tag">Python</span><span class="tag">LLM</span><span class="tag">Fine-tuning</span><span class="tag">Discord</span></div>
+      </div>
+      <div class="project-card">
+        <div class="project-icon">🎛️</div>
+        <h3>OpenClaw Dashboard</h3>
+        <p>A command center for orchestrating AI agents. Monitor, deploy, and manage autonomous agents from a single pane of glass. Built for power users.</p>
+        <div class="project-tags"><span class="tag">React</span><span class="tag">Express</span><span class="tag">WebSocket</span><span class="tag">AI Agents</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BLOG -->
+<section id="blog">
+  <div class="section-inner reveal">
+    <h2 class="section-title">Blog</h2>
+    <p class="section-subtitle">Thoughts, tutorials, and hot takes.</p>
+    <div class="blog-grid">
+      <div class="blog-card">
+        <div class="blog-date">Coming Soon</div>
+        <h3>Why RPA Isn't Dead — It's Evolving</h3>
+        <p>Everyone says RPA is dying. They're wrong. Here's why agentic automation is the next chapter, not the epilogue.</p>
+      </div>
+      <div class="blog-card">
+        <div class="blog-date">Coming Soon</div>
+        <h3>Fine-Tuning an LLM on 200K Discord Messages</h3>
+        <p>What happens when you feed years of group chat chaos into a language model? Chaos, but funnier.</p>
+      </div>
+      <div class="blog-card">
+        <div class="blog-date">Coming Soon</div>
+        <h3>Building a Gacha System From Scratch</h3>
+        <p>Rates, pity systems, economy balancing — game design is harder than it looks. Here's what I learned.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="section-inner reveal">
+    <h2 class="section-title">Contact</h2>
+    <p class="section-subtitle">Let's connect.</p>
+    <div class="contact-grid">
+      <a href="mailto:tyler.boris.dunn@gmail.com" class="contact-card">
+        <div class="icon">📧</div>
+        <div class="label">Email</div>
+        <div class="value">tyler.boris.dunn@gmail.com</div>
+      </a>
+      <a href="tel:+16157960734" class="contact-card">
+        <div class="icon">📱</div>
+        <div class="label">Phone</div>
+        <div class="value">(615) 796-0734</div>
+      </a>
+      <a href="https://github.com/theboris1995" target="_blank" class="contact-card">
+        <div class="icon">🐙</div>
+        <div class="label">GitHub</div>
+        <div class="value">theboris1995</div>
+      </a>
+      <a href="#" class="contact-card">
+        <div class="icon">💼</div>
+        <div class="label">LinkedIn</div>
+        <div class="value">Connect with me</div>
+      </a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <p>Built with ☕ and too many late nights by <strong>Boris</strong> · 2026</p>
+</footer>
+
+<script>
+// ========== PARTICLES ==========
+(function(){
+  const c=document.getElementById('particles'),ctx=c.getContext('2d');
+  let w,h,particles=[];
+  function resize(){w=c.width=innerWidth;h=c.height=innerHeight}
+  resize();window.addEventListener('resize',resize);
+  class P{
+    constructor(){this.reset()}
+    reset(){this.x=Math.random()*w;this.y=Math.random()*h;this.vx=(Math.random()-.5)*.3;this.vy=(Math.random()-.5)*.3;this.r=Math.random()*1.5+.5;this.a=Math.random()*.4+.1}
+    update(){this.x+=this.vx;this.y+=this.vy;if(this.x<0||this.x>w)this.vx*=-1;if(this.y<0||this.y>h)this.vy*=-1}
+    draw(){ctx.beginPath();ctx.arc(this.x,this.y,this.r,0,Math.PI*2);ctx.fillStyle=`rgba(0,240,255,${this.a})`;ctx.fill()}
+  }
+  for(let i=0;i<80;i++)particles.push(new P());
+  function loop(){
+    ctx.clearRect(0,0,w,h);
+    particles.forEach(p=>{p.update();p.draw()});
+    // draw lines
+    for(let i=0;i<particles.length;i++)
+      for(let j=i+1;j<particles.length;j++){
+        const dx=particles[i].x-particles[j].x,dy=particles[i].y-particles[j].y,d=Math.sqrt(dx*dx+dy*dy);
+        if(d<120){ctx.beginPath();ctx.moveTo(particles[i].x,particles[i].y);ctx.lineTo(particles[j].x,particles[j].y);ctx.strokeStyle=`rgba(0,240,255,${.08*(1-d/120)})`;ctx.stroke()}
+      }
+    requestAnimationFrame(loop);
+  }
+  loop();
+})();
+
+// ========== TYPING ==========
+(function(){
+  const phrases=["Automating the boring stuff since 2015.","160+ bots in prod. Zero regrets.","If it's repetitive, I'll automate it.","Senior RPA Dev by day. Bot builder by night.","I teach machines so humans don't have to."];
+  const el=document.getElementById('tagline');
+  let pi=0,ci=0,deleting=false;
+  function type(){
+    const phrase=phrases[pi];
+    if(!deleting){
+      el.innerHTML=phrase.slice(0,ci+1)+'<span class="cursor">|</span>';
+      ci++;
+      if(ci===phrase.length){setTimeout(()=>{deleting=true;type()},2000);return}
+      setTimeout(type,50+Math.random()*40);
+    }else{
+      el.innerHTML=phrase.slice(0,ci)+'<span class="cursor">|</span>';
+      ci--;
+      if(ci===0){deleting=false;pi=(pi+1)%phrases.length;setTimeout(type,400);return}
+      setTimeout(type,25);
+    }
+  }
+  type();
+})();
+
+// ========== NAV SCROLL ==========
+window.addEventListener('scroll',()=>{
+  document.getElementById('nav').classList.toggle('scrolled',scrollY>50);
+});
+
+// ========== HAMBURGER ==========
+document.getElementById('hamburger').addEventListener('click',()=>{
+  document.getElementById('navLinks').classList.toggle('open');
+});
+document.querySelectorAll('.nav-links a').forEach(a=>a.addEventListener('click',()=>document.getElementById('navLinks').classList.remove('open')));
+
+// ========== INTERSECTION OBSERVER ==========
+const obs=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible')});
+},{threshold:.15});
+document.querySelectorAll('.reveal,.timeline-item').forEach(el=>obs.observe(el));
+
+// ========== SKILL BARS ==========
+const skillObs=new IntersectionObserver((entries)=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.querySelectorAll('.skill-fill').forEach(bar=>{bar.style.width=bar.dataset.w});
+      skillObs.unobserve(e.target);
+    }
+  });
+},{threshold:.3});
+document.querySelectorAll('.skills-list').forEach(el=>skillObs.observe(el));
+
+// ========== RADAR CHART ==========
+(function(){
+  const canvas=document.getElementById('radarCanvas'),ctx=canvas.getContext('2d');
+  const labels=['RPA','C#/.NET','JavaScript','Python','SQL','PowerShell','AI/LLM','Java/C++'];
+  const values=[.95,.9,.85,.8,.85,.8,.85,.7];
+  const cx=200,cy=200,maxR=150,levels=5;
+  let anim=0;
+  
+  function draw(progress){
+    ctx.clearRect(0,0,400,400);
+    const n=labels.length,step=Math.PI*2/n;
+    // grid
+    for(let l=1;l<=levels;l++){
+      ctx.beginPath();
+      const r=maxR*l/levels;
+      for(let i=0;i<=n;i++){
+        const a=-Math.PI/2+step*i;
+        const method=i===0?'moveTo':'lineTo';
+        ctx[method](cx+Math.cos(a)*r,cy+Math.sin(a)*r);
+      }
+      ctx.strokeStyle='rgba(42,42,68,.6)';ctx.stroke();
+    }
+    // axes
+    for(let i=0;i<n;i++){
+      const a=-Math.PI/2+step*i;
+      ctx.beginPath();ctx.moveTo(cx,cy);ctx.lineTo(cx+Math.cos(a)*maxR,cy+Math.sin(a)*maxR);
+      ctx.strokeStyle='rgba(42,42,68,.4)';ctx.stroke();
+    }
+    // data
+    ctx.beginPath();
+    for(let i=0;i<=n;i++){
+      const idx=i%n,a=-Math.PI/2+step*idx,r=maxR*values[idx]*progress;
+      ctx[i===0?'moveTo':'lineTo'](cx+Math.cos(a)*r,cy+Math.sin(a)*r);
+    }
+    ctx.fillStyle='rgba(0,240,255,.12)';ctx.fill();
+    ctx.strokeStyle='rgba(0,240,255,.8)';ctx.lineWidth=2;ctx.stroke();
+    // dots + labels
+    for(let i=0;i<n;i++){
+      const a=-Math.PI/2+step*i,r=maxR*values[i]*progress;
+      ctx.beginPath();ctx.arc(cx+Math.cos(a)*r,cy+Math.sin(a)*r,4,0,Math.PI*2);ctx.fillStyle='#00f0ff';ctx.fill();
+      const lr=maxR+20;
+      ctx.fillStyle='#8888a0';ctx.font='12px Space Grotesk';ctx.textAlign='center';ctx.textBaseline='middle';
+      ctx.fillText(labels[i],cx+Math.cos(a)*lr,cy+Math.sin(a)*lr);
+    }
+  }
+  
+  const radarObs=new IntersectionObserver((entries)=>{
+    if(entries[0].isIntersecting){
+      let start=null;
+      function animate(ts){
+        if(!start)start=ts;
+        anim=Math.min((ts-start)/1000,1);
+        draw(anim);
+        if(anim<1)requestAnimationFrame(animate);
+      }
+      requestAnimationFrame(animate);
+      radarObs.unobserve(canvas);
+    }
+  },{threshold:.3});
+  radarObs.observe(canvas);
+})();
+</script>
+</body>
+</html>
